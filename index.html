@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Gestão de Notebooks — Dashboard</title>
+  <title>CCM Notebooks — Dashboard</title>
 
   <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -13,15 +13,15 @@
 
   <style>
     :root{
-      --bg: #f8fafc;
+      --bg: #eaf2ff;
       --card: #ffffff;
-      --muted: #6b7280;
-      --primary: #2563eb; /* azul */
-      --accent: #06b6d4;  /* teal */
+      --muted: #475569;
+      --primary: #0b6ef6; /* azul predominante */
+      --accent: #06b981;  /* detalhes em verde */
       --success: #10b981;
       --danger: #ef4444;
       --glass: rgba(255,255,255,0.6);
-      --shadow: 0 6px 18px rgba(16,24,40,0.06);
+      --shadow: 0 8px 28px rgba(9,30,66,0.08);
       --radius: 12px;
     }
 
@@ -30,7 +30,7 @@
     body{
       margin:0;
       font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: linear-gradient(180deg,#f8fafc 0%, #eef2ff 100%);
+      background: linear-gradient(180deg,#eaf2ff 0%, #f8fcff 100%);
       color:#0f172a;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
@@ -44,16 +44,18 @@
       padding:28px;
     }
     aside.sidebar {
-      width:260px;
-      background:linear-gradient(180deg,#1e3a8a,#3b82f6);
+      width:300px;
+      background:linear-gradient(180deg,#063a77,var(--primary));
       color:white;
       border-radius:16px;
-      padding:18px;
-      box-shadow: 0 8px 30px rgba(34,50,84,0.14);
+      padding:20px;
+      box-shadow: 0 12px 40px rgba(6,33,82,0.14);
       flex-shrink:0;
       display:flex;
       flex-direction:column;
       gap:12px;
+      align-items:center;
+      text-align:center;
     }
 
     .brand {
@@ -61,22 +63,26 @@
       gap:12px;
       align-items:center;
       margin-bottom:6px;
+      flex-direction:column;
+      width:100%;
     }
     .logo {
-      width:44px;height:44px;border-radius:10px;
+      width:86px;height:86px;border-radius:14px;
       background:linear-gradient(135deg,#a78bfa,#60a5fa);
       display:flex;align-items:center;justify-content:center;
-      box-shadow: 0 6px 18px rgba(99,102,241,0.18);
-      font-weight:700;color:white;
+      box-shadow: 0 6px 18px rgba(99,102,241,0.12);
+      font-weight:700;color:white;overflow:hidden;
     }
-    .brand h1{font-size:16px;margin:0;font-weight:600}
+    .logo img{width:100%;height:100%;object-fit:contain;display:block}
+
+    .brand h1{font-size:18px;margin:6px 0 0;font-weight:800}
     .brand p{font-size:12px;margin:0;opacity:0.95}
 
-    nav.side-nav{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+    nav.side-nav{display:flex;flex-direction:column;gap:8px;margin-top:8px;width:100%}
     nav.side-nav button{
-      background:transparent;border:0;color:white;padding:10px 10px;border-radius:10px;text-align:left;
-      display:flex;gap:12px;align-items:center;font-weight:600;cursor:pointer;
-      transition:background .18s, transform .08s;
+      background:transparent;border:0;color:white;padding:12px 14px;border-radius:10px;text-align:left;
+      display:flex;gap:12px;align-items:center;font-weight:700;cursor:pointer;
+      transition:background .18s, transform .08s;width:100%;
     }
     nav.side-nav button svg {opacity:0.95}
     nav.side-nav button:hover{background: rgba(255,255,255,0.06); transform:translateY(-1px)}
@@ -120,7 +126,7 @@
       width:100%;border-collapse:collapse;font-size:14px;
     }
     thead th{
-      text-align:left;padding:12px 10px;border-bottom:1px solid #eef2ff;color:var(--muted);
+      text-align:left;padding:12px 10px;border-bottom:1px solid #eef6ff;color:var(--muted);
     }
     tbody td{
       padding:12px 10px;border-bottom:1px solid #f1f5f9;
@@ -131,17 +137,19 @@
     .badge {
       display:inline-block;padding:6px 10px;border-radius:999px;font-weight:600;font-size:12px;
     }
-    .badge.disp{background:#eef2ff;color:#2563eb}
-    .badge.uso{background:#ffede9;color:#ef4444}
+    .badge.disp{background:#ecfeff;color:#03545b}
+    .badge.uso{background:#ffedd5;color:#92400e}
     .badge.dev{background:#ecfdf5;color:#065f46}
+    .badge.indis{background:#fff1f2;color:#7f1d1d;border:1px solid rgba(239,68,68,0.08)}
+    .badge.resv{background:#fff7ed;color:#92400e;border:1px solid rgba(245,158,11,0.08)}
 
     /* Buttons */
     .btn {
       display:inline-flex;gap:8px;align-items:center;padding:8px 10px;border-radius:8px;border:0;cursor:pointer;
-      font-weight:600;
+      font-weight:700;
     }
-    .btn.primary{background:var(--primary);color:white;box-shadow:0 6px 18px rgba(37,99,235,0.12)}
-    .btn.ghost{background:transparent;border:1px solid #e6eefc;color:var(--primary)}
+    .btn.primary{background:linear-gradient(90deg,var(--primary),var(--accent));color:white;box-shadow:0 8px 24px rgba(11,110,246,0.12)}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.12);color:white;padding:8px 12px}
     .btn.warn{background:var(--accent);color:white}
     .btn.danger{background:var(--danger);color:white}
 
@@ -169,12 +177,25 @@
     .small{font-size:12px}
     .table-scroll{max-height:360px;overflow:auto;border-radius:8px}
     .filters{display:flex;gap:8px;align-items:center}
-    .select, select, input[type="text"], input[type="date"]{padding:8px;border-radius:8px;border:1px solid #e6eefc;background:white;outline:none}
+    .select, select, input[type="text"], input[type="date"], input[type="number"]{padding:8px;border-radius:8px;border:1px solid #e6eefc;background:white;outline:none}
     .chip{background:#f1f5f9;padding:6px 10px;border-radius:999px;font-weight:600}
 
-    /* Reset button style */
-    .btn-reset {
-      background:transparent;color:var(--muted);border:1px solid #e6eefc;padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:700;
+    /* Empréstimos - selection helpers */
+    .nb-card {
+      justify-content:flex-start;border:1px solid #eef7ff;border-radius:10px;padding:10px;display:flex;gap:8px;align-items:center;
+      background:linear-gradient(180deg,#fff,#fbfffe);
+    }
+    .nb-card.disabled{opacity:0.55;cursor:not-allowed}
+    .nb-card .initial {
+      min-width:46px;min-height:36px;border-radius:8px;background:#f0f9ff;display:flex;align-items:center;justify-content:center;font-weight:700;
+    }
+
+    /* Modal simple */
+    .modal {
+      position:fixed;left:0;top:0;width:100%;height:100%;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.45);z-index:1200;
+    }
+    .modal .box {
+      width:520px;background:var(--card);padding:18px;border-radius:12px;box-shadow:var(--shadow);
     }
   </style>
 </head>
@@ -183,9 +204,12 @@
     <!-- SIDEBAR -->
     <aside class="sidebar" role="navigation">
       <div class="brand">
-        <div class="logo">NB</div>
-        <div>
-          <h1>Gestão de Notebooks</h1>
+        <div class="logo" title="Logo CCM">
+          <!-- PUT logo.png in same folder (recommended) -->
+          <img src="logo.png" alt="Logo CCM" onerror="this.style.display='none'"/>
+        </div>
+        <div style="width:100%">
+          <h1>CCM Notebooks</h1>
           <p class="small">Painel administrativo</p>
         </div>
       </div>
@@ -216,15 +240,25 @@
           Empréstimos
         </button>
 
+        <button data-page="reservas" onclick="navTo(event,'reservas')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M16 2v4" stroke="currentColor" stroke-width="1.4"/></svg>
+          Reservas
+        </button>
+
         <button data-page="relatorio" onclick="navTo(event,'relatorio')">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 3v18h18" stroke="currentColor" stroke-width="1.4"/></svg>
           Relatório
         </button>
+
+        <button data-page="config" onclick="navTo(event,'config')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 15.5a3.5 3.5 0 100-7 3.5 3.5 0 000 7z" stroke="currentColor" stroke-width="1.4"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06A2 2 0 013 17.88l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 110-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82L4.21 3.21A2 2 0 016 0.38l.06.06a1.65 1.65 0 001.82.33h0A1.65 1.65 0 0010 1.25V1a2 2 0 114 0v.25a1.65 1.65 0 001 .51 1.65 1.65 0 001.82-.33l.06-.06A2 2 0 0120.12 3l-.06.06a1.65 1.65 0 00-.33 1.82 1.65 1.65 0 001.51 1H21a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z" stroke="currentColor" stroke-width="1.4"/></svg>
+          Configurações
+        </button>
       </nav>
 
-      <div style="margin-top:auto">
+      <div style="margin-top:auto;width:100%;">
         <div class="small muted">Versão</div>
-        <div class="chip small" style="margin-top:8px">v1.2 — Clean UI</div>
+        <div class="chip small" style="margin-top:8px">v1.3 — CCM</div>
       </div>
     </aside>
 
@@ -233,7 +267,6 @@
       <div class="topbar">
         <div class="searchbar">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.35-4.35" stroke="#94a3b8" stroke-width="1.4" stroke-linecap="round"/></svg>
-          <!-- global search input (id preserved) -->
           <input id="globalSearch" placeholder="Pesquisar (aluno, notebook, professor)..." oninput="onGlobalSearch()" />
           <div style="flex:1"></div>
           <button class="btn ghost" onclick="openBackup()">Backup</button>
@@ -245,6 +278,58 @@
       <!-- Dashboard / container -->
       <section id="conteudo"></section>
     </main>
+  </div>
+
+  <!-- Modal: Emprestar Selecionados -->
+  <div id="modalEmprestar" class="modal" aria-hidden="true">
+    <div class="box">
+      <h3 style="margin-top:0">Emprestar dispositivos selecionados</h3>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+        <select id="modalTipo" class="select">
+          <option value="aluno">Aluno</option>
+          <option value="professor">Professor</option>
+        </select>
+        <input id="modalNome" placeholder="Nome do responsável" style="flex:1" />
+        <input id="modalData" type="date" />
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end">
+        <button class="btn ghost" onclick="fecharModalEmprestar()">Cancelar</button>
+        <button class="btn primary" onclick="confirmarEmprestimoSelecionados()">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Reservar (opcional confirm) -->
+  <div id="modalReservar" class="modal" aria-hidden="true">
+    <div class="box">
+      <h3 style="margin-top:0">Confirmar Reserva</h3>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:8px">
+        <div style="display:flex;gap:8px">
+          <select id="resDia" class="select">
+            <option value="Segunda">Segunda</option>
+            <option value="Terça">Terça</option>
+            <option value="Quarta">Quarta</option>
+            <option value="Quinta">Quinta</option>
+            <option value="Sexta">Sexta</option>
+          </select>
+          <select id="resSlot" class="select">
+            <option value="7:00-7:50">7:00-7:50</option>
+            <option value="7:50-8:40">7:50-8:40</option>
+            <option value="8:40-9:30">8:40-9:30</option>
+            <option value="9:45-10:35">9:45-10:35</option>
+            <option value="10:35-11:25">10:35-11:25</option>
+            <option value="11:25-12:15">11:25-12:15</option>
+          </select>
+        </div>
+        <input id="resProfessor" placeholder="Nome do professor (ex: Prof. Ana)" />
+        <div id="resSelectedCount" class="small muted">Selecionados: 0</div>
+      </div>
+
+      <div style="display:flex;gap:8px;justify-content:flex-end">
+        <button class="btn ghost" onclick="fecharModalReservar()">Cancelar</button>
+        <button class="btn primary" onclick="confirmarReservasSelecionadas()">Confirmar Reserva</button>
+      </div>
+    </div>
   </div>
 
   <!-- Toast container -->
@@ -294,6 +379,7 @@
       if (!localStorage.getItem('emprestimos')) localStorage.setItem('emprestimos', JSON.stringify([]));
       if (!localStorage.getItem('alunos')) localStorage.setItem('alunos', JSON.stringify([]));
       if (!localStorage.getItem('professores')) localStorage.setItem('professores', JSON.stringify([]));
+      if (!localStorage.getItem('reservas')) localStorage.setItem('reservas', JSON.stringify([]));
     }
 
     // ---------- Page router ----------
@@ -305,9 +391,17 @@
         case 'alunos': renderAlunos(conteudo); break;
         case 'professores': renderProfessores(conteudo); break;
         case 'emprestimos': renderEmprestimos(conteudo); break;
+        case 'reservas': renderReservas(conteudo); break;
         case 'relatorio': renderRelatorio(conteudo); break;
+        case 'config': renderConfig(conteudo); break;
         default: renderHome(conteudo);
       }
+      // ensure active button matches
+      document.querySelectorAll('.side-nav button').forEach(b => {
+        if (b.dataset.page === pagina) {
+          b.classList.add('active');
+        }
+      });
     }
 
     // ---------- HOME (dashboard) ----------
@@ -357,7 +451,7 @@
       const professores = JSON.parse(localStorage.getItem('professores')) || [];
       const emprestimos = JSON.parse(localStorage.getItem('emprestimos')) || [];
 
-      const emUso = emprestimos.filter(e => e.status === 'Em uso').length;
+      const emUso = emprestimos.filter(e => e.status.includes('Em uso') || e.status.includes('Emprestado')).length;
       const disponiveis = notebooks.filter(n => n.status === 'Disponível').length;
 
       document.getElementById('cardNotebooks').textContent = `${disponiveis} / ${emUso}`;
@@ -367,8 +461,8 @@
       // recent list
       const recent = emprestimos.slice().reverse().slice(0,8);
       document.getElementById('recentList').innerHTML = recent.length ? `
-        <table><thead><tr><th>Notebook</th><th>Aluno</th><th>Status</th></tr></thead>
-        <tbody>${recent.map(r=>`<tr><td>${r.id}</td><td>${r.alunoSel}</td><td>${r.status}</td></tr>`).join('')}</tbody></table>
+        <table><thead><tr><th>Notebook</th><th>Responsável</th><th>Status</th></tr></thead>
+        <tbody>${recent.map(r=>`<tr><td>${r.id}</td><td>${r.alunoSel || r.profSel}</td><td>${r.status}</td></tr>`).join('')}</tbody></table>
       ` : '<div class="muted small">Nenhum empréstimo ainda.</div>';
 
       // charts
@@ -378,23 +472,25 @@
     function renderCharts(){
       const notebooks = JSON.parse(localStorage.getItem('notebooks')) || [];
       const emprestimos = JSON.parse(localStorage.getItem('emprestimos')) || [];
+      const reservas = JSON.parse(localStorage.getItem('reservas')) || [];
 
       const cntDisp = notebooks.filter(n => n.status === 'Disponível').length;
-      const cntUso = notebooks.filter(n => n.status === 'Em uso').length;
+      const cntInd = notebooks.filter(n => n.status === 'Indisponível').length;
+      const cntUso = notebooks.filter(n => n.status !== 'Disponível' && n.status !== 'Indisponível').length;
       const ctx1 = document.getElementById('chart1').getContext('2d');
       if (window._chart1) window._chart1.destroy();
       window._chart1 = new Chart(ctx1, {
         type:'doughnut',
-        data:{labels:['Disponível','Em uso'],datasets:[{data:[cntDisp,cntUso]}]},
+        data:{labels:['Disponível','Indisponível','Em uso'],datasets:[{data:[cntDisp,cntInd,cntUso]}]},
         options:{plugins:{legend:{display:true},title:{display:true,text:'Status dos Dispositivos'}}}
       });
 
-      const cntDev = emprestimos.filter(e=>e.status==='Devolvido').length;
+      const cntDev = emprestimos.filter(e=>e.status.includes('Devolvido')).length;
       const ctx2 = document.getElementById('chart2').getContext('2d');
       if (window._chart2) window._chart2.destroy();
       window._chart2 = new Chart(ctx2, {
         type:'pie',
-        data:{labels:['Em uso','Devolvidos'],datasets:[{data:[cntUso,cntDev]}]},
+        data:{labels:['Em uso','Devolvidos'],datasets:[{data:[emprestimos.filter(e=>e.status.includes('Em uso')||e.status.includes('Emprestado')).length,cntDev]}]},
         options:{plugins:{legend:{display:true},title:{display:true,text:'Empréstimos'}}}
       });
     }
@@ -432,12 +528,19 @@
                   <td>${n.id}</td>
                   <td>${n.marca}</td>
                   <td>${n.tipo}</td>
-                  <td>${n.status === 'Disponível' ? '<span class="badge disp">Disponível</span>' : '<span class="badge uso">Em uso</span>'}</td>
+                  <td>${statusBadge(n)}</td>
                 </tr>`).join('')}
             </tbody>
           </table>
         </div>
       `;
+    }
+
+    // helper to render badges based on status
+    function statusBadge(n){
+      if (n.status === 'Disponível') return '<span class="badge disp">Disponível</span>';
+      if (n.status === 'Indisponível') return '<span class="badge indis">Indisponível</span>';
+      return `<span class="badge uso">${n.status}</span>`;
     }
 
     // ---------- ALUNOS ----------
@@ -531,8 +634,6 @@
     }
 
     // ---------- EMPRÉSTIMOS ----------
-    let selecionados = []; // ids dos notebooks selecionados
-
     function renderEmprestimos(div){
       const alunos = JSON.parse(localStorage.getItem('alunos')) || [];
       const professores = JSON.parse(localStorage.getItem('professores')) || [];
@@ -554,30 +655,31 @@
 
         <div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap">
           <div style="flex:1;min-width:320px" class="panel">
-            <h4 style="margin:0 0 8px">Novo Empréstimo</h4>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-              <select id="alunoSel">
-                <option value="">Selecione o aluno</option>
-                ${alunos.map(a=>`<option value="${a.nome}">${a.nome} — ${a.turma}</option>`).join('')}
-              </select>
-              <select id="profSel">
-                <option value="">Selecione o professor</option>
-                ${professores.map(p=>`<option value="${p.nome}">${p.nome} — ${p.materia}</option>`).join('')}
-              </select>
-              <button class="btn primary" onclick="iniciarEmprestimo()">Iniciar</button>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+              <h4 style="margin:0">Novo Empréstimo</h4>
+              <div>
+                <button class="btn ghost" id="btnSelectNone" onclick="limparSelecao()">Limpar</button>
+                <button class="btn primary" id="btnEmprestarSelecionados" onclick="abrirModalEmprestar()">Emprestar Selecionados</button>
+              </div>
             </div>
 
-            <h5 style="margin:12px 0 8px">Selecionar dispositivos</h5>
-            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px">
-              ${notebooks.map(n=>`
-                <button class="btn" id="nb-${n.id}" style="justify-content:flex-start;border:1px solid #eef2ff;border-radius:10px; ${n.status==='Em uso' ? 'opacity:0.6;cursor:not-allowed' : ''}" onclick="toggleNotebook('${n.id}', this)">
-                  <div style="min-width:36px;min-height:36px;border-radius:8px;background:#f8fafc;display:flex;align-items:center;justify-content:center;font-weight:700">${n.marca[0]||'?'}</div>
-                  <div style="text-align:left">
-                    <div style="font-weight:700">${n.id}</div>
-                    <div class="small muted">${n.marca} • ${n.tipo}</div>
-                  </div>
-                </button>
-              `).join('')}
+            <div style="margin-top:12px">
+              <h5 style="margin:0 0 8px">Selecionar dispositivos</h5>
+              <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px" id="nbGrid">
+                ${ (JSON.parse(localStorage.getItem('notebooks')) || []).map(n=>`
+                  <label class="nb-card ${n.status !== 'Disponível' ? 'disabled' : ''}" data-id="${n.id}">
+                    <input type="checkbox" class="nb-checkbox" data-id="${n.id}" ${n.status !== 'Disponível' ? 'disabled' : ''} style="margin-right:8px"/>
+                    <div style="display:flex;gap:8px;align-items:center">
+                      <div class="initial">${(n.marca && n.marca[0]) || '?'}</div>
+                      <div style="text-align:left">
+                        <div style="font-weight:700">${n.id}</div>
+                        <div class="small muted">${n.marca} • ${n.tipo}</div>
+                        <div style="margin-top:6px">${statusBadge(n)}</div>
+                      </div>
+                    </div>
+                  </label>
+                `).join('') }
+              </div>
             </div>
           </div>
 
@@ -585,72 +687,86 @@
             <h4 style="margin:0 0 8px">Lista de Empréstimos</h4>
             <div class="table-scroll">
               <table>
-                <thead><tr><th>ID</th><th>Aluno</th><th>Professor</th><th>Status</th><th>Data</th><th style="text-align:right">Ações</th></tr></thead>
+                <thead><tr><th>ID</th><th>Aluno / Prof</th><th>Status</th><th>Data</th><th style="text-align:right">Ações</th></tr></thead>
                 <tbody>
-                  ${emprestimos
+                  ${ (JSON.parse(localStorage.getItem('emprestimos')) || [])
                     .filter(e=>{
                       const filtro = document.getElementById('filtroStatusEmp') ? document.getElementById('filtroStatusEmp').value : 'Todos';
                       if (filtro !== 'Todos' && e.status !== filtro) return false;
                       const q = document.getElementById('searchEmp') ? document.getElementById('searchEmp').value.toLowerCase() : '';
                       if (!q) return true;
-                      return (e.id + ' ' + e.alunoSel + ' ' + e.profSel).toLowerCase().includes(q);
+                      return (e.id + ' ' + (e.alunoSel||'') + ' ' + (e.profSel||'')).toLowerCase().includes(q);
                     })
                     .map((e,i)=>`<tr>
                       <td>${e.id}</td>
-                      <td>${e.alunoSel}</td>
-                      <td>${e.profSel}</td>
-                      <td>${e.status === 'Em uso' ? '<span class="badge uso">Em uso</span>' : '<span class="badge dev">Devolvido</span>'}</td>
+                      <td>${e.alunoSel || e.profSel || '-'}</td>
+                      <td>${(e.status === 'Em uso' || e.status.includes('Emprestado')) ? '<span class="badge uso">Em uso</span>' : '<span class="badge dev">Devolvido</span>'}</td>
                       <td>${e.dataDevolucao || e.data || '-'}</td>
                       <td style="text-align:right">
-                        ${e.status === 'Em uso'
+                        ${ (e.status === 'Em uso' || e.status.includes('Emprestado'))
                           ? `<button class="btn primary" onclick="devolverEmprestimo(${i})">Devolver</button>`
                           : `<button class="btn danger" onclick="excluirEmprestimo(${i})">Excluir</button>`}
                       </td>
-                    </tr>`).join('')}
+                    </tr>`).join('') }
                 </tbody>
               </table>
             </div>
           </div>
         </div>
       `;
+
+      // attach checkbox handlers after DOM created (we don't need persistent selected var)
+      document.querySelectorAll('.nb-checkbox').forEach(cb=>{
+        cb.addEventListener('change', e=>{
+          // selection state only read on confirm
+        });
+      });
     }
 
-    function toggleNotebook(id, btn){
+    function limparSelecao(){
+      document.querySelectorAll('.nb-checkbox').forEach(cb=> cb.checked = false);
+      showToast('Seleção limpa.', 'info', 1200);
+    }
+
+    function abrirModalEmprestar(){
+      const selecionados = Array.from(document.querySelectorAll('.nb-checkbox:checked')).map(cb=>cb.dataset.id);
+      if (!selecionados.length) { showToast('Selecione ao menos um dispositivo.', 'danger'); return; }
+      document.getElementById('modalNome').value = '';
+      document.getElementById('modalData').value = '';
+      document.getElementById('modalEmprestar').style.display = 'flex';
+      document.getElementById('modalEmprestar').setAttribute('aria-hidden','false');
+    }
+
+    function fecharModalEmprestar(){
+      document.getElementById('modalEmprestar').style.display = 'none';
+      document.getElementById('modalEmprestar').setAttribute('aria-hidden','true');
+    }
+
+    function confirmarEmprestimoSelecionados(){
+      const tipo = document.getElementById('modalTipo').value;
+      const nome = document.getElementById('modalNome').value.trim();
+      const data = document.getElementById('modalData').value;
+      if (!nome) { showToast('Digite o nome do responsável.', 'danger'); return; }
+
       const notebooks = JSON.parse(localStorage.getItem('notebooks')) || [];
-      const found = notebooks.find(n=>n.id===id);
-      if (!found || found.status === 'Em uso') return; // cannot select in-use
-      if (selecionados.includes(id)){
-        selecionados = selecionados.filter(x=>x!==id);
-        btn.style.boxShadow = 'none';
-        btn.style.borderColor = '#eef2ff';
-      } else {
-        selecionados.push(id);
-        btn.style.boxShadow = '0 8px 20px rgba(37,99,235,0.12)';
-        btn.style.borderColor = '#c7ddff';
-      }
-    }
-
-    function iniciarEmprestimo(){
-      const alunoSel = document.getElementById('alunoSel').value;
-      const profSel = document.getElementById('profSel').value;
-      if (!alunoSel || !profSel || selecionados.length === 0) return showToast('Selecione aluno, professor e pelo menos um dispositivo.', 'danger');
-
       const emprestimos = JSON.parse(localStorage.getItem('emprestimos')) || [];
-      const notebooks = JSON.parse(localStorage.getItem('notebooks')) || [];
 
-      const novos = selecionados.map(id => {
-        const nb = notebooks.find(n=>n.id===id);
-        if (nb) nb.status = 'Em uso';
-        return { id, alunoSel, profSel, status: 'Em uso', data: new Date().toLocaleString('pt-BR') };
+      const ids = Array.from(document.querySelectorAll('.nb-checkbox:checked')).map(cb => cb.dataset.id);
+
+      const novos = ids.map(id => {
+        const nb = notebooks.find(n=>n.id === id);
+        if (nb) nb.status = `Emprestado — ${nome}`;
+        return { id, alunoSel: tipo==='aluno' ? nome : '', profSel: tipo==='professor' ? nome : '', status: 'Em uso', data: data || new Date().toLocaleString('pt-BR') };
       });
 
       emprestimos.push(...novos);
       localStorage.setItem('emprestimos', JSON.stringify(emprestimos));
       localStorage.setItem('notebooks', JSON.stringify(notebooks));
-      selecionados = [];
-      showToast('Empréstimo iniciado.', 'success');
-      renderEmprestimos(document.getElementById('conteudo'));
+
+      fecharModalEmprestar();
+      mostrarPagina('emprestimos');
       atualizarHomeData();
+      showToast('Empréstimos registrados com sucesso.', 'success', 1800);
     }
 
     function devolverEmprestimo(index){
@@ -669,7 +785,7 @@
       localStorage.setItem('notebooks', JSON.stringify(notebooks));
 
       showToast('Empréstimo devolvido.', 'success');
-      renderEmprestimos(document.getElementById('conteudo'));
+      mostrarPagina('emprestimos');
       atualizarHomeData();
     }
 
@@ -679,8 +795,202 @@
       emprestimos.splice(index,1);
       localStorage.setItem('emprestimos', JSON.stringify(emprestimos));
       showToast('Empréstimo excluído.', 'success');
-      renderEmprestimos(document.getElementById('conteudo'));
+      mostrarPagina('emprestimos');
       atualizarHomeData();
+    }
+
+    // ---------- RESERVAS ----------
+    const SLOTS = ["7:00-7:50","7:50-8:40","8:40-9:30","9:45-10:35","10:35-11:25","11:25-12:15"];
+    const DIAS = ["Segunda","Terça","Quarta","Quinta","Sexta"];
+
+    function renderReservas(div){
+      const notebooks = JSON.parse(localStorage.getItem('notebooks')) || [];
+      const reservas = JSON.parse(localStorage.getItem('reservas')) || [];
+
+      // Build notebook selection area (when choosing day+slot, unavailable ones will be disabled)
+      const notebookOptions = notebooks.map(n=>`
+        <label style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <input type="checkbox" class="res-nb" data-id="${n.id}" ${n.status !== 'Disponível' ? 'disabled' : ''}/>
+          <span style="min-width:80px;font-weight:700">${n.id}</span>
+          <span class="small muted">${n.marca} • ${n.tipo}</span>
+        </label>
+      `).join('');
+
+      div.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h2 style="margin:0">Reservas</h2>
+          <div class="filters">
+            <select id="resFiltroDia" class="select" onchange="renderReservas(document.getElementById('conteudo'))">
+              <option value="Todos">Todos os dias</option>
+              ${DIAS.map(d=>`<option value="${d}">${d}</option>`).join('')}
+            </select>
+            <select id="resFiltroSlot" class="select" onchange="renderReservas(document.getElementById('conteudo'))">
+              <option value="Todos">Todos os horários</option>
+              ${SLOTS.map(s=>`<option value="${s}">${s}</option>`).join('')}
+            </select>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap">
+          <div style="flex:1;min-width:340px" class="panel">
+            <h4 style="margin:0 0 8px">Criar Reserva</h4>
+            <div style="display:flex;gap:8px;margin-bottom:8px">
+              <select id="selDia" class="select">${DIAS.map(d=>`<option value="${d}">${d}</option>`).join('')}</select>
+              <select id="selSlot" class="select">${SLOTS.map(s=>`<option value="${s}">${s}</option>`).join('')}</select>
+            </div>
+
+            <div style="display:flex;gap:8px;margin-bottom:8px">
+              <select id="selProf" class="select" style="flex:1">
+                <option value="">Selecione professor...</option>
+                ${ (JSON.parse(localStorage.getItem('professores')) || []).map(p=>`<option value="${p.nome}">${p.nome} — ${p.materia||''}</option>`).join('') }
+              </select>
+              <input id="selQuantidade" type="number" min="1" value="1" style="width:96px" />
+            </div>
+
+            <div style="margin-top:8px">
+              <h5 style="margin:6px 0">Selecionar notebooks</h5>
+              <div id="resNbList" style="display:flex;flex-direction:column;max-height:220px;overflow:auto;padding-right:6px">
+                ${notebookOptions}
+              </div>
+            </div>
+
+            <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+              <button class="btn ghost" onclick="limparSelecaoReservas()">Limpar</button>
+              <button class="btn primary" onclick="abrirModalReservar()">Reservar selecionados</button>
+            </div>
+          </div>
+
+          <div style="flex:1;min-width:420px" class="panel">
+            <h4 style="margin:0 0 8px">Lista de Reservas</h4>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>Professor</th><th>Dia</th><th>Horário</th><th>Notebooks</th><th style="text-align:right">Ações</th></tr></thead>
+                <tbody>
+                  ${reservas
+                    .filter(r=>{
+                      const fd = document.getElementById('resFiltroDia') ? document.getElementById('resFiltroDia').value : 'Todos';
+                      const fs = document.getElementById('resFiltroSlot') ? document.getElementById('resFiltroSlot').value : 'Todos';
+                      if (fd !== 'Todos' && r.dia !== fd) return false;
+                      if (fs !== 'Todos' && r.slot !== fs) return false;
+                      return true;
+                    })
+                    .map((r,i)=>`<tr>
+                      <td>${r.professor}</td>
+                      <td>${r.dia}</td>
+                      <td>${r.slot}</td>
+                      <td>${r.notebooks.join(', ')}</td>
+                      <td style="text-align:right">
+                        <button class="btn ghost" onclick="duplicarReserva(${i})">Duplicar</button>
+                        <button class="btn danger" onclick="cancelarReserva(${i})">Cancelar</button>
+                      </td>
+                    </tr>`).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // After render: attach listeners to disable notebooks already reserved for selected dia+slot
+      atualizarDisponibilidadeNotebooksReservas();
+      document.getElementById('selDia').addEventListener('change', atualizarDisponibilidadeNotebooksReservas);
+      document.getElementById('selSlot').addEventListener('change', atualizarDisponibilidadeNotebooksReservas);
+    }
+
+    function limparSelecaoReservas(){
+      document.querySelectorAll('.res-nb').forEach(cb => { cb.checked = false; cb.disabled = cb.getAttribute('data-original-disabled') === 'true' });
+      showToast('Seleção limpa.', 'info', 1200);
+    }
+
+    function atualizarDisponibilidadeNotebooksReservas(){
+      const dia = document.getElementById('selDia').value;
+      const slot = document.getElementById('selSlot').value;
+      const reservas = JSON.parse(localStorage.getItem('reservas')) || [];
+
+      // for each notebook checkbox: disable if already reserved at that dia+slot
+      document.querySelectorAll('.res-nb').forEach(cb=>{
+        const id = cb.dataset.id;
+        const confl = reservas.some(r => r.dia === dia && r.slot === slot && r.notebooks.includes(id));
+        // preserve original disabled state from status (Indisponível) by storing attribute
+        if (!cb.hasAttribute('data-original-disabled')) {
+          cb.setAttribute('data-original-disabled', cb.disabled ? 'true' : 'false');
+        }
+        cb.disabled = confl || (cb.getAttribute('data-original-disabled') === 'true');
+        if (confl) cb.parentElement.style.opacity = '0.55';
+        else cb.parentElement.style.opacity = '1';
+      });
+    }
+
+    function abrirModalReservar(){
+      const selecionados = Array.from(document.querySelectorAll('.res-nb:checked')).map(cb=>cb.dataset.id);
+      if (!selecionados.length) { showToast('Selecione ao menos um notebook para reservar.', 'danger'); return; }
+      const dia = document.getElementById('selDia').value;
+      const slot = document.getElementById('selSlot').value;
+      document.getElementById('resDia').value = dia;
+      document.getElementById('resSlot').value = slot;
+      document.getElementById('resProfessor').value = document.getElementById('selProf').value || '';
+      document.getElementById('resSelectedCount').textContent = 'Selecionados: ' + selecionados.length;
+      document.getElementById('modalReservar').style.display = 'flex';
+      document.getElementById('modalReservar').setAttribute('aria-hidden','false');
+    }
+
+    function fecharModalReservar(){
+      document.getElementById('modalReservar').style.display = 'none';
+      document.getElementById('modalReservar').setAttribute('aria-hidden','true');
+    }
+
+    function confirmarReservasSelecionadas(){
+      const selecionados = Array.from(document.querySelectorAll('.res-nb:checked')).map(cb=>cb.dataset.id);
+      const dia = document.getElementById('resDia').value;
+      const slot = document.getElementById('resSlot').value;
+      const prof = document.getElementById('resProfessor').value.trim();
+      if (!prof) { showToast('Digite o nome do professor.', 'danger'); return; }
+      if (!selecionados.length) { showToast('Nenhum notebook selecionado.', 'danger'); return; }
+
+      // check again if any conflict (race)
+      const reservas = JSON.parse(localStorage.getItem('reservas')) || [];
+      const conflitantes = selecionados.filter(id => reservas.some(r => r.dia === dia && r.slot === slot && r.notebooks.includes(id)));
+      if (conflitantes.length) {
+        showToast('Um ou mais notebooks já foram reservados nesse horário: ' + conflitantes.join(', '), 'danger');
+        atualizarDisponibilidadeNotebooksReservas();
+        fecharModalReservar();
+        return;
+      }
+
+      // create reserva
+      reservas.push({
+        id: 'R-' + Date.now(),
+        professor: prof,
+        dia,
+        slot,
+        notebooks: selecionados.slice(),
+        createdAt: new Date().toISOString()
+      });
+
+      localStorage.setItem('reservas', JSON.stringify(reservas));
+      fecharModalReservar();
+      renderReservas(document.getElementById('conteudo'));
+      showToast('Reserva criada.', 'success', 1400);
+    }
+
+    function cancelarReserva(index){
+      if (!confirm('Cancelar esta reserva?')) return;
+      const reservas = JSON.parse(localStorage.getItem('reservas')) || [];
+      reservas.splice(index,1);
+      localStorage.setItem('reservas', JSON.stringify(reservas));
+      renderReservas(document.getElementById('conteudo'));
+      showToast('Reserva cancelada.', 'success');
+    }
+
+    function duplicarReserva(index){
+      const reservas = JSON.parse(localStorage.getItem('reservas')) || [];
+      const base = reservas[index];
+      if (!base) return;
+      const nova = Object.assign({}, base, { id: 'R-'+Date.now(), createdAt: new Date().toISOString() });
+      reservas.push(nova);
+      localStorage.setItem('reservas', JSON.stringify(reservas));
+      renderReservas(document.getElementById('conteudo'));
+      showToast('Reserva duplicada.', 'success');
     }
 
     // ---------- RELATÓRIO ----------
@@ -727,11 +1037,118 @@
         </tr>`).join('');
     }
 
+    // ---------- CONFIGURAÇÕES (Manutenção) ----------
+    function renderConfig(div){
+      const notebooks = JSON.parse(localStorage.getItem('notebooks')) || [];
+      div.innerHTML = `
+        <h2 style="margin:0 0 8px">Configurações</h2>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="flex:1" class="panel">
+            <h4 style="margin:0 0 8px">Manutenção — dispositivos</h4>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>ID</th><th>Marca</th><th>Tipo</th><th>Status</th><th style="text-align:right">Ações</th></tr></thead>
+                <tbody>
+                  ${notebooks.map((n,i)=>`<tr>
+                    <td>${n.id}</td>
+                    <td>${n.marca}</td>
+                    <td>${n.tipo}</td>
+                    <td>${statusBadge(n)}</td>
+                    <td style="text-align:right">
+                      ${n.status === 'Indisponível'
+                        ? `<button class="btn ghost" onclick="setDisponivel('${n.id}')">Marcar Disponível</button>`
+                        : `<button class="btn ghost" onclick="setIndisponivel('${n.id}')">Marcar Indisponível</button>`}
+                      <button class="btn danger" onclick="removerNotebook('${n.id}')">Remover</button>
+                    </td>
+                  </tr>`).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div style="flex:0.6" class="panel">
+            <h4 style="margin:0 0 8px">Ações rápidas</h4>
+            <p class="muted small">Ferramentas para manutenção do inventário.</p>
+            <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
+              <button class="btn ghost" onclick="resetarDisponiveis()">Marcar todos como disponíveis</button>
+              <button class="btn ghost" onclick="removerIndisponiveis()">Remover indisponíveis</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function setIndisponivel(id){
+      const notebooks = JSON.parse(localStorage.getItem('notebooks')) || [];
+      const nb = notebooks.find(n=>n.id === id);
+      if (!nb) return showToast('Notebook não encontrado.', 'danger');
+      nb.status = 'Indisponível';
+      localStorage.setItem('notebooks', JSON.stringify(notebooks));
+      renderConfig(document.getElementById('conteudo'));
+      showToast(`Notebook ${id} marcado como indisponível.`, 'info', 1600);
+      atualizarHomeData();
+    }
+
+    function setDisponivel(id){
+      const notebooks = JSON.parse(localStorage.getItem('notebooks')) || [];
+      const nb = notebooks.find(n=>n.id === id);
+      if (!nb) return showToast('Notebook não encontrado.', 'danger');
+      nb.status = 'Disponível';
+      localStorage.setItem('notebooks', JSON.stringify(notebooks));
+      renderConfig(document.getElementById('conteudo'));
+      showToast(`Notebook ${id} marcado como disponível.`, 'success', 1400);
+      atualizarHomeData();
+    }
+
+    function removerNotebook(id){
+      if (!confirm(`Remover ${id} do inventário permanentemente?`)) return;
+      // also remove it from any reservas and emprestimos
+      let notebooks = JSON.parse(localStorage.getItem('notebooks')) || [];
+      notebooks = notebooks.filter(n=>n.id !== id);
+      localStorage.setItem('notebooks', JSON.stringify(notebooks));
+
+      let reservas = JSON.parse(localStorage.getItem('reservas')) || [];
+      reservas = reservas.map(r => ({...r, notebooks: r.notebooks.filter(x=>x!==id)})).filter(r => r.notebooks.length);
+      localStorage.setItem('reservas', JSON.stringify(reservas));
+
+      let emprestimos = JSON.parse(localStorage.getItem('emprestimos')) || [];
+      emprestimos = emprestimos.filter(e=>e.id !== id);
+      localStorage.setItem('emprestimos', JSON.stringify(emprestimos));
+
+      renderConfig(document.getElementById('conteudo'));
+      showToast(`Notebook ${id} removido.`, 'success', 1400);
+      atualizarHomeData();
+    }
+
+    function resetarDisponiveis(){
+      const notebooks = JSON.parse(localStorage.getItem('notebooks')) || [];
+      notebooks.forEach(n=>{ if (n.status !== 'Indisponível') n.status = 'Disponível' });
+      localStorage.setItem('notebooks', JSON.stringify(notebooks));
+      renderConfig(document.getElementById('conteudo'));
+      showToast('Todos os dispositivos (não indisponíveis) marcados como disponíveis.', 'success', 1600);
+      atualizarHomeData();
+    }
+
+    function removerIndisponiveis(){
+      if (!confirm('Remover TODOS os dispositivos marcados como indisponíveis?')) return;
+      let notebooks = JSON.parse(localStorage.getItem('notebooks')) || [];
+      const idsRemovidos = notebooks.filter(n=> n.status === 'Indisponível').map(n=>n.id);
+      notebooks = notebooks.filter(n=> n.status !== 'Indisponível');
+      localStorage.setItem('notebooks', JSON.stringify(notebooks));
+
+      let reservas = JSON.parse(localStorage.getItem('reservas')) || [];
+      reservas = reservas.map(r => ({...r, notebooks: r.notebooks.filter(x=>!idsRemovidos.includes(x))})).filter(r => r.notebooks.length);
+      localStorage.setItem('reservas', JSON.stringify(reservas));
+
+      showToast('Indisponíveis removidos.', 'success', 1600);
+      renderConfig(document.getElementById('conteudo'));
+      atualizarHomeData();
+    }
+
     // ---------- Search global (top) ----------
     function onGlobalSearch(){
       const q = document.getElementById('globalSearch').value.trim().toLowerCase();
       if (!q) {
-        // if empty, go back to home
         mostrarPagina('home');
         return;
       }
@@ -740,10 +1157,8 @@
       const notebooks = JSON.parse(localStorage.getItem('notebooks')) || [];
       const alunos = JSON.parse(localStorage.getItem('alunos')) || [];
 
-      // If query matches notebook id or brand -> go to notebooks and set local search
       if (notebooks.some(n => n.id.toLowerCase().includes(q) || n.marca.toLowerCase().includes(q))) {
         mostrarPagina('notebooks');
-        // set searchDevice after render
         setTimeout(()=> {
           const el = document.getElementById('searchDevice');
           if (el) { el.value = q; renderNotebooks(document.getElementById('conteudo')); }
@@ -751,15 +1166,12 @@
         return;
       }
 
-      // If matches aluno name -> go to alunos
       if (alunos.some(a => a.nome.toLowerCase().includes(q))) {
         mostrarPagina('alunos');
-        // no specific search input on Alunos page; show toast to guide user
         showToast('Navegue na lista de alunos; termo: "'+q+'".', 'info', 1800);
         return;
       }
 
-      // If matches emprestimos (by aluno, id or professor) -> go to emprestimos and set search
       if (emprestimos.some(e => (e.alunoSel + ' ' + e.id + ' ' + e.profSel).toLowerCase().includes(q))) {
         mostrarPagina('emprestimos');
         setTimeout(()=> {
@@ -786,13 +1198,14 @@
         notebooks: JSON.parse(localStorage.getItem('notebooks')||'[]'),
         alunos: JSON.parse(localStorage.getItem('alunos')||'[]'),
         professores: JSON.parse(localStorage.getItem('professores')||'[]'),
-        emprestimos: JSON.parse(localStorage.getItem('emprestimos')||'[]')
+        emprestimos: JSON.parse(localStorage.getItem('emprestimos')||'[]'),
+        reservas: JSON.parse(localStorage.getItem('reservas')||'[]')
       };
       const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `backup_gestao_notebooks_${new Date().toISOString().slice(0,10)}.json`;
+      a.download = `backup_ccm_notebooks_${new Date().toISOString().slice(0,10)}.json`;
       a.click();
       URL.revokeObjectURL(url);
       showToast('Backup gerado.', 'success');
