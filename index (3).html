@@ -1435,13 +1435,6 @@ function removerReserva(i){
       localStorage.setItem('reservas', JSON.stringify(reservas));
       renderReservas(document.getElementById('conteudo'));
       showToast('Reserva duplicada.', 'success');
-
-      <input id="searchReserva"
-       class="select"
-       placeholder="Pesquisar reservas..."
-       oninput="renderReservas(document.getElementById('conteudo'))"
-       style="width:180px; margin-bottom:10px;">
-
     }
 
     // ---------- RELATÓRIO ----------
